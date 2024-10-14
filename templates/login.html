@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <title>XR Login</title>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #F0F5F9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 20px; /* Ensure some spacing on smaller screens */
+        }
+
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            color: #3A506B;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 30px; /* More space between title and form */
+        }
+
+        .label {
+            font-size: 14px;
+            color: #3A506B;
+            font-weight: 700;
+            margin-bottom: 5px; /* Consistent space between label and input */
+        }
+
+        .input-blk {
+            width: 90%;
+            padding: 14px; /* Slightly larger padding for comfort */
+            margin-top: 5px;
+            margin-bottom: 20px; /* Consistent spacing between input fields */
+            border-radius: 8px;
+            border: 1px solid #D9E2EC;
+            background-color: #E5ECF3;
+            font-size: 16px;
+            color: #3A506B;
+            outline: none;
+            font-weight: 400;
+        }
+
+        .input-blk:focus {
+            border-color: #5BC0BE;
+            background-color: #FFF;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px; /* More space between the form and buttons */
+        }
+
+        .btn {
+            background-color: #3A506B;
+            color: white;
+            border: none;
+            padding: 14px 20px; /* Slightly larger padding for easier tapping */
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px; /* Space between buttons */
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #5BC0BE;
+        }
+
+        .wrong-message {
+            color: #FF6B6B;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px; /* Space between the form and the error message */
+        }
+
+        a.btn-primary {
+            text-align: center;
+            background-color: #5BC0BE;
+            text-decoration: none;
+            display: block;
+            padding: 14px 20px;
+            border-radius: 8px;
+            margin-top: 10px; /* Consistent space between buttons */
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            cursor: pointer;
+        }
+
+        a.btn-primary:hover {
+            background-color: #3A506B;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="title">Login</h1>
+    <form action="/login" method="POST" class="login-container">
+        <div>
+            <p class="label">Username:</p>
+            <input placeholder="Username" class="input-blk" name="input_username" required />
+            <p class="label">Password:</p>
+            <input placeholder="Password" type="password" class="input-blk" name="input_password" required />
+        </div>
+        <br/>
+        {% with messages = get_flashed_messages() %}
+             {% if messages %}
+                <p class="wrong-message">Wrong username or password!</p>
+             {% endif %}
+        {% endwith %}
+        <div class="button-container">
+            <button type="submit" class="btn">Submit</button>
+            <a href="{{url_for('signup')}}" ><button type="button"class="btn">Create Account</button></a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

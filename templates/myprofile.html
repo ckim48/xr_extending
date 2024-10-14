@@ -1,0 +1,220 @@
+{% extends "nav.html" %}
+
+{% block profile %}
+<head>
+    <style>
+        /* General styling */
+        body {
+            background-color: #F0F5F9;
+            font-family: 'Lato', sans-serif;
+            color: #3A506B;
+        }
+
+        /* Profile card */
+        .custom-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-card-header {
+/*            background-color: #3A506B;*/
+            color: black;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .custom-profile-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .custom-card-body {
+            background-color: white;
+            padding: 30px;
+        }
+
+        .custom-user-info {
+            background-color: lightgray !important;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #3A506B;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            word-break: break-word;
+        }
+
+        /* User chart and activity */
+        .custom-user-chart {
+/*            background-color: #5BC0BE;*/
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+
+        .custom-chart-card {
+            background-color: #3A506B;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+
+        .custom-card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+
+        .custom-text-success {
+            color: #28a745 !important;
+        }
+
+        .custom-text-warning {
+            color: #ffc107 !important;
+        }
+
+        .custom-text-danger {
+            color: #dc3545 !important;
+        }
+
+        .custom-canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .custom-graph-margin {
+            margin-top: 50px;
+        }
+
+        .custom-shadow-lg {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        @media (max-width: 768px) {
+            .custom-card-body {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .custom-user-chart, .custom-chart-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<div class="container">
+    <div class="custom-card mt-6 custom-shadow-lg border-0">
+        <div class="custom-card-header myprofilecard">
+            <h2 class="custom-profile-heading">My Profile</h2>
+        </div>
+        <div class="custom-card-body" style="padding-left: 41px;">
+            <div class="row mt-3">
+                <div class="col-12 col-md-4">
+                    <label class="merriweather" style="font-size: 18px;"><strong>Username: </strong></label>
+                    <p class="custom-user-info mt-3" style="width: 80%; background-color: black;">{{username}}</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="merriweather" style="font-size: 18px;"><strong>Age: </strong></label>
+                    <p class="custom-user-info mt-3" style="width: 80%; background-color: black;">{{age}}</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="merriweather" style="font-size: 18px;"><strong>Email: </strong></label>
+                    <p class="custom-user-info mt-3" style="width: 80%; background-color: black;">{{email}}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-4">
+                    <label class="merriweather" style="font-size: 18px;"><strong>Country: </strong></label>
+                    <p class="custom-user-info mt-3" style="width: 80%; background-color: black;">{{country}}</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="merriweather" style="font-size: 18px;"><strong>MBTI: </strong></label>
+                    <p class="custom-user-info mt-3" style="width: 80%; background-color: black;">{{MBTI}}</p>
+                </div>
+                <div class="row mt-3">
+                    <div>
+                        <label class="merriweather" style="font-size: 18px;"><strong>Short Description: </strong></label>
+                        <p class="custom-user-info mt-3" style="background-color: black;">{{description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row custom-graph-margin mb-5">
+    <div class="col-md-6">
+        <div class="custom-user-chart px-5 py-5">
+            <h4>Users' Activities</h4>
+            <canvas class="custom-canvas" id="userLoginGraph"></canvas>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="custom-chart-card px-4 py-3 mx-auto mt-6">
+            <div class="custom-card-body">
+                <h2 class="custom-card-title text-center">Your Overall Sentiment</h2>
+                {% if sentiment <= -0.5 %}
+                    <h1 class="text-center custom-text-danger">{{sentiment}}</h1>
+                {% elif sentiment > -0.5 and sentiment <= 0.5 %}
+                    <h1 class="text-center custom-text-warning">{{sentiment}}</h1>
+                {% else %}
+                    <h1 class="text-center custom-text-success">{{sentiment}}</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('userLoginGraph').getContext('2d');
+var loginCount = {{loginCount | tojson | safe}};
+var loginPeriod = {{loginPeriod | tojson | safe}};
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: loginPeriod,
+        datasets: [{
+            label: '# of Users Logged in',
+            data: loginCount,
+            backgroundColor: [
+                'rgb(72, 202, 228)',
+            ],
+            borderColor: [
+                'rgb(72, 202, 228)',
+            ],
+            borderWidth: 4
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true,
+                    color: 'black',
+                },
+                grid: {
+                    color: 'black',
+                }
+            },
+            x:{
+                ticks:{
+                    color: 'black',
+                },
+            },
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'black'
+                }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}
