@@ -141,7 +141,7 @@ def signup():
         email = request.form.get("Email")
         age = request.form.get("Age")
         country = request.form.get("Country")
-        MBTI = request.form.get("MBTI")
+        # MBTI = request.form.get("MBTI")
         description = request.form.get("Description")
         # store value into database
         conn = sqlite3.connect("hw.db")
@@ -157,8 +157,8 @@ def signup():
             salt = bcrypt.gensalt()
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
             current_time = datetime.now().strftime("%Y-%m-%d")
-            command = "INSERT INTO users_table (username, password, email, age, country, MBTI, description, signdate, sentiment) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)"
-            cursor.execute(command, (username, hashed_password, email, age, country, MBTI, description,current_time, 0))
+            command = "INSERT INTO users_table (username, password, email, age, country,  description, signdate, sentiment) VALUES ( ?, ?, ?, ?, ?, ?,?,?)"
+            cursor.execute(command, (username, hashed_password, email, age, country, description,current_time, 0))
             conn.commit()
             conn.close()
         else:
