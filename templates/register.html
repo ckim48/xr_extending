@@ -8,14 +8,15 @@
 </head>
 <body id="login">
   <div class ="container">
-    <div class="card login-card mt-5 mx-auto">
-      <h1 class="text-center">Login</h1>
+    <div class="card login-card mt-5 mx-auto ">
+      <h1 class="text-center">Register</h1>
       <div class="card-body">
-          <form action ="/login" method = "POST">
-            <input class="form-control mb-4 changing-color" placeholder="Enter your email" name = "email" >
-            <input class="form-control mb-4 changing-color" type="password" placeholder="Enter your password" name = "password">
-
-            <p>Don't have an account? <a href="{{url_for('register')}}">Sign up</a></p>
+          <form action ="/register" method = "POST">
+            <input type = "email" class="form-control mb-4 changing-color" placeholder="Enter your email" name = "email" required>
+            <input id="password" class="form-control mb-4 changing-color" type="password" placeholder="Enter your password" name = "password" required>
+            <input class="form-control mb-4 changing-color" placeholder="Enter your fullname" name = "fullname" required>
+              <input class="form-control mb-4 changing-color" placeholder="Enter your gender(Female / Male)" name = "gender" required>
+              <input class="form-control mb-4 changing-color" placeholder="Enter your age" name = "age" required>
             <button type = "submit" class = "btn login-btn">Login</button>
 
               {% with messages = get_flashed_messages() %}
@@ -29,5 +30,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+
+    </script>
 </body>
 </html>
