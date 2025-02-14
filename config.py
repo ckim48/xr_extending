@@ -1,12 +1,10 @@
-
-
 firebaseConfig = {
-  "apiKey": "AIzaSyBr3uE0HpXYR3BzAL5UYC-kI2JA4NXIEYM",
-  "authDomain": "projecxr.firebaseapp.com",
-  "projectId": "projecxr",
-  "databaseURL": "https://projecxr-default-rtdb.firebaseio.com",
-  "storageBucket": "projecxr.firebasestorage.app",
-  "messagingSenderId": "185905382183",
-  "appId": "1:185905382183:web:a3fc7e31901f6bce771f02",
-  "measurementId": "G-D3WCKQ4T3C"
+  "apiKey": "AIzaSyCHEMzwwDq65pv0BLkDwD43T6LH5zus_zE",
+  "authDomain": "projectxr-91805.firebaseapp.com",
+  "databaseURL": "https://projectxr-91805-default-rtdb.firebaseio.com/",
+  "projectId": "projectxr-91805",
+  "storageBucket": "projectxr-91805.firebasestorage.app",
+  "messagingSenderId": "488085436911",
+  "appId": "1:488085436911:web:a67f44e861efc6151dde1a",
+  "measurementId": "G-MWWLNHBCC9"
 }

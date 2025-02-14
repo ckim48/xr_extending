@@ -1,5 +1,29 @@
 {% extends 'header.html' %}
 {% block index %}
+<head>
+    <style>
+        #features .card{
+            border: none;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,1);
+            border-radius: 10px;
+            transition: 0.3s ease;
+        }
+        #features .card:hover{
+            transform: translateY(-10px);
+            box-shadow: 0 6px 20px rgba(0,0,0,15);
+        }
+        #features .card-body h3{
+            margin-bottom: 15px;
+            font-size: 1.8 rem;
+            color: #2c3e50;
+        }
+        #features img {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
 
 
 <section class="hero">
@@ -30,8 +54,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-center">Data Analysis</h3>
-                        <p class="text-justify">Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. </p>
-                        <img class="img-fluid d-block mx-auto" src="../static/img/data_analysis.jpg">
+                        <p class="text-justify">Analyze recorded audio data to evaluate the effectiveness of counseling, identify statistical features, and determine whether it positively enhances sentiment. </p>
+                        <img class="img-fluid d-block mx-auto mt-5" src="../static/img/data_analysis.jpg">
                     </div>
                 </div>
             </div>
@@ -39,8 +63,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-center">Machine Learning</h3>
-                        <p class="text-justify">Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. </p>
-                        <img class="img-fluid d-block mx-auto" src="../static/img/machine learning.jpg">
+                        <p class="text-justify">Convert audio to text, extract key keywords, analyze them, and identify any changes in sentiment. </p>
+                        <img class="img-fluid d-block mx-auto mt-5" src="../static/img/machine learning.jpg">
                     </div>
                 </div>
             </div>
@@ -48,8 +72,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-center">VR application</h3>
-                        <p class="text-justify">Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. Project XR is best. </p>
-                        <img class="img-fluid d-block mx-auto" src="../static/img/unnamed.jpg">
+                        <p class="text-justify">Through VR apps, people are given the opportunity to receive more objective counseling from AI.</p>
+                        <img class="img-fluid d-block mx-auto mt-5" src="../static/img/unnamed.jpg">
                     </div>
                 </div>
             </div>

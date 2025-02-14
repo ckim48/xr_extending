@@ -1,152 +1,257 @@
 {% extends 'header.html' %}
-{% block database %}
 
+{% block database %}
+    <style>
+        .table{
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 17px;
+            text-align: left;
+        }
+        .table thead{
+            background-color: #4a4a4a;
+            color: white;
+        }
+        .table thead th{
+            background-color: #4a4a4a;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+        .table tbody tr{
+            background-color: #f9f9f9;
+            border-bottom:1px solid #ddd;
+        }
+        .table tbody tr:nth-of-type(even){
+            background-color: #f1f1f1;
+        }
+        .table-container{
+            overflow-x: auto;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        .table tbody tr:hover {
+            background-color: black;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .stat-card{
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .stat-card h3{
+            font-size: 20px;
+            color: #4a4a4a;
+            margin-bottom:10px;
+        }
+        .stat-card .stat-number{
+            font-size: 32px;
+            font-weight: bold;
+            color: #4b4fa7;
+        }
+        #wordcloud{
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            width: 100%;
+            height: 400px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top:20px;
+        }
+    </style>
     <div class="container" id="database">
-        <h2 class="text-center section-title mt-6" data-aos="fade-down" data-aos-duration="1500">Database</h2>
-        <table class="table mt-4" data-aos="fade-up" data-aos-duration="1500">
-            <thead>
-                    <th scope="col">#</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Country</th>
-            </thead>
-            <tbody>
-            {% for i in range(num_users) %}
-                    <tr>
-                        <td>{{indices[i]}}</td>
-                        <td>{{usernames[i]}}</td>
-                        <td>{{genders[i]}}</td>
-                        <td>{{ages[i]}}</td>
-                        <td>{{countries[i]}}</td>
-                    </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="row mb-5" >
-            <div class="col-md-6" data-aos="fade-up-right">
-                <div class="card chart-card">
+        <h2 class="text-center section-title mt-6" data-aos="fade-up" data-aos-duration="1000">Database</h2>
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <h3>Data Summary</h3>
+                <p>{{summary}}</p>
+            </div>
+        </div>
+        <div class="table-container">
+            <h2 class="text-center">User Data</h2>
+            <table class="table  table-hover mt-5" data-aos="fade-up">
+                <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Age</th>
+                </thead>
+                <tbody>
+                {% for i in range(num_users) %}
+                        <tr class="mytr">
+                            <td class="mytr">{{indices[i]}}</td>
+                            <td>{{usernames[i]}}</td>
+                            <td>{{genders[i]}}</td>
+                            <td>{{ages[i]}}</td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-number" id="stat-total-users">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <div class="stat-number" id="stat-active-users">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Female Users</h3>
+                    <div class="stat-number" id="stat-female-users">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Male Users</h3>
+                    <div class="stat-number" id="stat-male-users">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="card chart-card"   data-aos="fade-right" data-aos-duration="1000">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Gender Distribution</h3>
-                        <canvas class="mx-auto" id = "myChart" width = "400" height="200"></canvas>
+                        <canvas id="myChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" data-aos="fade-up-left">
-                <div class="card chart-card">
+            <div class="col-md-6 mt-5 mt-md-0">
+                <div class="card chart-card"   data-aos="fade-left" data-aos-duration="1000">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Gender Distribution</h3>
-                        <canvas class="mx-auto" id = "myChart2" width = "400" height="200"></canvas>
+                        <canvas class="mx-auto" id="myChart2" ></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mt-md-5" data-aos="fade-up-right">
-                <div class="card chart-card">
+            <div class="col-md-6 mt-5 mt-md-5">
+                <div class="card chart-card"   data-aos="fade-right" data-aos-duration="1000">
                     <div class="card-body">
                         <h3 class="text-center mb-4">User Activities</h3>
-                        <canvas class="mx-auto" id = "myChart3" width="400" height="200"></canvas>
+                        <canvas class="mx-auto" id="myChart3"  width="500" height="300">></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mt-md-5" data-aos="fade-up-left">
-                <div class="card chart-card">
+
+             <div class="col-md-6 mt-md-5">
+                <div class="card chart-card"   data-aos="fade-right" data-aos-duration="1000">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Users' Sentiment</h3>
-                        <canvas class="mx-auto" id = "myChart4" width="400" height="200" ></canvas>
+                        <canvas class="mx-auto" id="myChart4"  width="400" height="250">></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mt-md-5" data-aos="fade-up-right">
-                <div class="card chart-card">
+
+            <div class="col-md-6 mt-md-5">
+                <div class="card chart-card"   data-aos="fade-right" data-aos-duration="1000">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Keyword Analysis</h3>
-                        <canvas class="mx-auto" id = "myChart5" width="400" height="200" ></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mt-md-5" data-aos="fade-up-left">
-                <div class="card chart-card">
-                    <div class="card-body">
-                        <h3 class="text-center mb-4">Positive</h3>
-                        <canvas class="mx-auto" id = "myChart6" width="400" height="200" ></canvas>
+                        <canvas class="mx-auto" id="myChart5"  width="400" height="250">></canvas>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="wordcloud">
+            <canvas id="wordcloudCanvas"></canvas>
+        </div>
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.3/src/wordcloud2.min.js"></script>
+
 <script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Male", "Female"],
-            datasets: [{
-                label: "Number",
-                data: [15, 25],
-                backgroundColor: [
-                    'rgba(98, 99, 104)',
-                    '#5B7484'
-                ]
-            }]
-        }
-    });
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Male", "Female"],
+        datasets: [{
+            label: "Number",
+            data: [15,25],
+            backgroundColor: [
+                'rgba(157, 157, 200,0.5)',
+                'red'
+            ]
+        }]
+    }
+});
 
     const ctx2 = document.getElementById('myChart2').getContext('2d');
-    const myChart2 = new Chart(ctx2, {
-        type: 'pie',
-        data: {
-            labels: ["Male", "Female"],
-            datasets: [{
-                label: "Number",
-                data: [15, 25],
-                backgroundColor: [
-                    'rgba(98, 99, 104)',
-                    '#5B7484'
-                ]
-            }]
-        }
-    });
+const myChart2 = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+        labels: ["Male", "Female"],
+        datasets: [{
+            label: "Number",
+            data: [15,25],
+            backgroundColor: [
+                'green',
+                'red'
+            ]
+        }]
+    }
+});
+
     const ctx3 = document.getElementById('myChart3').getContext('2d');
     const myChart3 = new Chart(ctx3, {
-        type: 'line',
-        data: {
-            labels: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
-            datasets: [{
-                label: "Number",
-                data: [10, 12, 16, 19, 25, 23, 26],
-                backgroundColor: [
-                    'rgba(98, 99, 104)',
-                    '#5B7484'
-                ]
-            }]
-        }
-    });
-    const ctx4 = document.getElementById('myChart4').getContext('2d');
-    const myChart4 = new Chart(ctx4, {
-        type: 'radar',
-        data: {
-            labels: ["Positive", "Negative", "Neutral"],
-            datasets: [{
-                label: "Number",
-                data: [70, 40 ,50],
-                backgroundColor: [
-                    'rgba(98, 99, 104)',
-                    '#5B7484'
-                ]
-            }]
-        }
-    });
-
-    const keyFrequencies = {
-        "sad": 18,
-        "excite": 25,
-        "fun": 14,
-        "hard": 20
+    type: 'line',
+    data: {
+        labels: ["Sun","Mon","Tues","Wed","Thurs","Fri","Sat"],
+        datasets: [{
+            label: "Number",
+            data: [15,25,10,23,10,23,10],
+            backgroundColor: [
+                'green',
+                'red'
+            ]
+        }]
     }
-    const labels_keywords = Object.keys(keyFrequencies) // ["sad", "excite", "fun", "hard"]
-    const data_keywords = Object.values(keyFrequencies) // [18, 25, 14, 20]
+});
+
+        const ctx4 = document.getElementById('myChart4').getContext('2d');
+    const myChart4 = new Chart(ctx4, {
+    type: 'radar',
+    data: {
+        labels: ["Positive","Negative","Neutral"],
+        datasets: [{
+            label: "Number",
+            data: [70,40,50],
+            backgroundColor: [
+                'rgba(157, 157, 200,0.5)',
+                'rgba(244, 157, 200,0.5)'
+            ]
+        }]
+    }
+});
+
+   const keyFrequencies = {
+       "sad": 18,
+       "excite": 25,
+       "fun": 14,
+       "hard": 20
+   }
+   const labels_keywords = Object.keys(keyFrequencies); // ["sad","excite","fun","hard"]
+   const data_keywords = Object.values(keyFrequencies); // [18,25,14,20]
     var ctx5 = document.getElementById("myChart5").getContext('2d');
     new Chart(ctx5, {
         type: "bar",
@@ -154,48 +259,56 @@
             labels: labels_keywords,
             datasets: [{
                 data: data_keywords,
-                backgroundColor:["#061f6a", "#072fa9", "#093cd7", "#2e5ff5"]
+                backgroundColor:["#06b342","#2ab55b","#54b777", "#6fb487"]
             }]
         },
         options:{
             indexAxis: 'y',
             plugins:{
-                legend:{
+                legend: {
                     display: false
                 }
             }
         }
-
     });
-    const positiveFrequencies = {
-        "happy": 18,
-        "excite": 25,
-        "fun": 14,
-        "good": 20
-    }
-    const positive = Object.keys(positiveFrequencies) // ["sad", "excite", "fun", "hard"]
-    const data_positive = Object.values(positiveFrequencies) // [18, 25, 14, 20]
-    var ctx6 = document.getElementById("myChart6").getContext('2d');
-    new Chart(ctx6, {
-        type: "bar",
-        data: {
-            labels: positive,
-            datasets: [{
-                data: data_keywords,
-                backgroundColor:["#061f6a", "#072fa9", "#093cd7", "#2e5ff5"]
-            }]
-        },
-        options:{
-            indexAxis: 'y',
-            plugins:{
-                legend:{
-                    display: false
-                }
-            }
-        }
 
-    });
 
 </script>
+<script>
+const incrementNumber = (elementId, target) => {
+    let count = 0;
+    const increment = Math.ceil(target/100);
+    const interval = setInterval(()=> {
+        count+=increment;
+        if (count>=target){
+            count = target;
+            clearInterval(interval);
+        }
+        document.getElementById(elementId).textContent = count;
+    }, 20);
+}
+incrementNumber('stat-total-users',200);
+incrementNumber('stat-active-users',150);
+incrementNumber('stat-female-users',80);
+incrementNumber('stat-male-users',120);
 
+const wordCloudCanvas = document.getElementById('wordcloudCanvas');
+const wordList = [
+    ["keyword1", 20],
+    ["keyword2", 10],
+    ["keyword3", 15],
+    ["keyword4", 30],
+    ["keyword5", 5],
+]
+WordCloud(wordCloudCanvas, {
+list: wordList,
+gridSize: 8,
+weightFactor: 2,
+fontFamily: 'Poppins, sans-serif',
+color: '#007bff',
+rotateRatio:0.5,
+backgroundColor: '#ffffff'
+});
+</script>
 {% endblock %}
+
