@@ -22,16 +22,72 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+
+        .hero {
+    background : url('../img/bg1.jpg');
+    height: 100vh;
+    background-size : cover;
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    z-index: 1;
+
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color:white;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    color:white;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.hero-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background-color: #ffcc00;
+    color:black;
+    border: none;
+    transition: 0.4s !important;
+}
+
+.hero-btn:hover {
+/*    background-color: #ff5733;*/
+        background-color: #4a4b64;
+    color:white;
+}
+
+.highlight {
+    color: #ffcc00;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
     </style>
 </head>
 
 
-<section class="hero">
-     <div class="container">
-         <h1 class="page-style">Welcome to Project XR</h1>
-         <p class="page-style">Virtual Consulting Services</p>
-     </div>
- </section>
+<section class="hero d-flex align-items-center">
+    <div class="container text-center">
+        <h1 class="hero-title">Welcome to <span class="highlight">Project XR</span></h1>
+        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1500">Revolutionizing Virtual Consulting Services</p>
+        <a href="#about" class="btn btn-primary hero-btn"  data-aos="fade-up" data-aos-delay="1700" data-aos-duration="1500">Learn More</a>
+    </div>
+</section>
 
 <section id="about">
     <div class = "container">
